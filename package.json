@@ -1,0 +1,124 @@
+{
+    "name":  "vs-tabs",
+    "displayName":  "VS_Tabs",
+    "description":  "VS_Tabs: переключение между проектами с сохранением вкладок",
+    "version":  "0.2.1",
+    "publisher":  "local",
+    "engines":  {
+                    "vscode":  "^1.85.0"
+                },
+    "categories":  [
+                       "Other"
+                   ],
+    "activationEvents":  [
+                             "onStartupFinished"
+                         ],
+    "main":  "./out/extension.js",
+    "contributes":  {
+                        "commands":  [
+                                         {
+                                             "title":  "VS_Tabs: Добавить папки как проекты",
+                                             "command":  "vsTabs.addFolders",
+                                             "icon":  "$(add)"
+                                         },
+                                         {
+                                             "command":  "vsTabs.addCurrentProject",
+                                             "title":  "VS_Tabs: Добавить текущую папку как проект"
+                                         },
+                                         {
+                                             "command":  "vsTabs.switchProject",
+                                             "title":  "VS_Tabs: Переключить проект"
+                                         },
+                                         {
+                                             "command":  "vsTabs.removeProject",
+                                             "title":  "VS_Tabs: Удалить проект из списка"
+                                         },
+                                         {
+                                             "title":  "Обновить список",
+                                             "command":  "vsTabs.refresh",
+                                             "icon":  "$(refresh)"
+                                         },
+                                         {
+                                             "title":  "VS_Tabs: Удалить из списка",
+                                             "command":  "vsTabs.removeFromList",
+                                             "icon":  "$(trash)"
+                                         }
+                                     ],
+                        "viewsContainers":  {
+                                                "activitybar":  [
+                                                                    {
+                                                                        "id":  "vsTabsContainer",
+                                                                        "title":  "Проекты",
+                                                                        "icon":  "$(folder-library)"
+                                                                    }
+                                                                ]
+                                            },
+                        "views":  {
+                                      "vsTabsContainer":  [
+                                                              {
+                                                                  "id":  "vsTabsView",
+                                                                  "name":  "Проекты"
+                                                              }
+                                                          ]
+                                  },
+                        "menus":  {
+                                      "view/title":  [
+                                                         {
+                                                             "group":  "navigation",
+                                                             "command":  "vsTabs.addFolders",
+                                                             "when":  "view == vsTabsView"
+                                                         },
+                                                         {
+                                                             "group":  "navigation",
+                                                             "command":  "vsTabs.refresh",
+                                                             "when":  "view == vsTabsView"
+                                                         }
+                                                     ],
+                                      "view/item/context":  [
+                                                                {
+                                                                    "group":  "inline",
+                                                                    "command":  "vsTabs.removeFromList",
+                                                                    "when":  "view == vsTabsView \u0026\u0026 viewItem == projectItem"
+                                                                }
+                                                            ]
+                                  },
+                        "keybindings":  [
+                                            {
+                                                "command":  "vsTabs.switchProject",
+                                                "key":  "ctrl+alt+p",
+                                                "mac":  "cmd+alt+p"
+                                            },
+                                            {
+                                                "command":  "vsTabs.addProject",
+                                                "key":  "ctrl+alt+a",
+                                                "mac":  "cmd+alt+a"
+                                            }
+                                        ],
+                        "configuration":  {
+                                              "properties":  {
+                                                                 "vsTabs.debug":  {
+                                                                                      "description":  "Включить отладочный лог в %TEMP%\\vs-tabs-debug.log",
+                                                                                      "default":  false,
+                                                                                      "type":  "boolean"
+                                                                                  }
+                                                             },
+                                              "title":  "VS_Tabs"
+                                          }
+                    },
+    "scripts":  {
+                    "vscode:prepublish":  "npm run compile",
+                    "compile":  "tsc -p ./",
+                    "watch":  "tsc -watch -p ./"
+                },
+    "devDependencies":  {
+                            "@types/vscode":  "^1.85.0",
+                            "@types/node":  "^20.x",
+                            "typescript":  "^5.x"
+                        },
+    "repository":  {
+                       "type":  "git",
+                       "url":  "https://github.com/riushakov/vs-tabs.git"
+                   },
+    "author":  "riushakov",
+    "license":  "MIT"
+}
